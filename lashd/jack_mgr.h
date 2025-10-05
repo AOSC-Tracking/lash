@@ -42,30 +42,58 @@ struct _jack_mgr
 	int              quit;
 };
 
+#ifdef HAVE_JACK_DBUS
+lashd_jackdbus_mgr_t *
+#else
 jack_mgr_t *
+#endif
 jack_mgr_new(void);
 
 void
+#ifdef HAVE_JACK_DBUS
+jack_mgr_destroy(lashd_jackdbus_mgr_t *jack_mgr);
+#else
 jack_mgr_destroy(jack_mgr_t *jack_mgr);
+#endif
 
 void
+#ifdef HAVE_JACK_DBUS
+jack_mgr_lock(lashd_jackdbus_mgr_t *jack_mgr);
+#else
 jack_mgr_lock(jack_mgr_t *jack_mgr);
+#endif
 
 void
+#ifdef HAVE_JACK_DBUS
+jack_mgr_unlock(lashd_jackdbus_mgr_t *jack_mgr);
+#else
 jack_mgr_unlock(jack_mgr_t *jack_mgr);
+#endif
 
 void
+#ifdef HAVE_JACK_DBUS
+jack_mgr_add_client(lashd_jackdbus_mgr_t  *jack_mgr,
+#else
 jack_mgr_add_client(jack_mgr_t  *jack_mgr,
+#endif
                     uuid_t       id,
                     const char  *jack_client_name,
                     lash_list_t *jack_patches);
 
 lash_list_t *
+#ifdef HAVE_JACK_DBUS
+jack_mgr_remove_client(lashd_jackdbus_mgr_t *jack_mgr,
+#else
 jack_mgr_remove_client(jack_mgr_t *jack_mgr,
+#endif
                        uuid_t      id);
 
 lash_list_t *
+#ifdef HAVE_JACK_DBUS
+jack_mgr_get_client_patches(lashd_jackdbus_mgr_t *jack_mgr,
+#else
 jack_mgr_get_client_patches(jack_mgr_t *jack_mgr,
+#endif
                             uuid_t      id);
 
 #endif /* __LASHD_JACK_MGR_H__ */
