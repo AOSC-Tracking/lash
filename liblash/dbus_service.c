@@ -24,6 +24,7 @@
 #include <errno.h>
 
 #include "common/debug.h"
+#include "common/safety.h"
 
 #include "dbus/object_path.h"
 #include "dbus/service.h"

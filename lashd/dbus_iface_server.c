@@ -38,6 +38,8 @@
 #include "lash/types.h"
 #include "store.h"
 
+#include "lashd/jack_mgr.h"
+
 static void
 lashd_dbus_ping(method_call_t *call)
 {
