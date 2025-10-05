@@ -90,6 +90,9 @@ static void signal_segv(int signum, siginfo_t* info, void*ptr) {
     lash_error("info.si_errno = %d", info->si_errno);
     lash_error("info.si_code  = %d (%s)", info->si_code, si_codes[info->si_code]);
     lash_error("info.si_addr  = %p", info->si_addr);
+#if defined(__arm__) || defined(__aarch64__) || defined(__loongarch__) || defined(__riscv) || defined(__powerpc__) || defined (__ia64__) || defined (__alpha__) || defined (__FreeBSD_kernel__)
+    lash_error("No stack trace");
+#else
     for(i = 0; i < NGREG; i++)
         lash_error("reg[%02d]       = 0x" REGFORMAT, i, ucontext->uc_mcontext.gregs[i]);
 
@@ -143,6 +146,7 @@ static void signal_segv(int signum, siginfo_t* info, void*ptr) {
         lash_error("%s", strings[i]);
 #endif
     lash_error("End of stack trace");
+#endif
     exit (-1);
 }
 
